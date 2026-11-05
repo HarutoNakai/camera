@@ -34,10 +34,10 @@ body{background:var(--body);color:var(--chrome);font-family:var(--f-ui);overflow
 .start{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:24px}
 .start button{appearance:none;border:1px solid var(--brass);background:none;color:var(--brass);font:500 15px var(--f-ui);letter-spacing:.1em;padding:12px 26px;border-radius:24px}
 .start p{margin:0;font-size:12px;color:var(--dim);line-height:1.6;max-width:30em}
-.rack{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding-top:10px}
+.rack{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;padding-top:10px}
 .film{appearance:none;border:1px solid var(--line);background:var(--plate);color:var(--chrome);border-radius:6px;padding:6px 2px;
   font-family:var(--f-ui);display:flex;flex-direction:column;align-items:center;gap:1px}
-.film .n{font-size:13px;font-weight:500}.film .iso{font-family:var(--f-mono);font-size:9px;color:var(--dim)}
+.film .n{font-size:12px;font-weight:500}.film .iso{font-family:var(--f-mono);font-size:9px;color:var(--dim)}
 .film[aria-pressed="true"]{border-color:var(--brass);color:var(--brass)}.film[aria-pressed="true"] .iso{color:var(--brass)}
 .dials{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding-top:8px}
 .dial{display:flex;flex-direction:column;gap:2px;min-width:0}
@@ -71,7 +71,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 <body>
 <div class="top">
   <div class="mark">SUCHER</div>
-  <div class="info"><b id="cnt">00</b> · <span id="filmLabel">CLASSIC 400</span></div>
+  <div class="info"><b id="cnt">00</b> · <span id="filmLabel">WETZLAR 100</span></div>
 </div>
 
 <div class="finder" id="finder">
@@ -85,7 +85,8 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 </div>
 
 <div class="rack">
-  <button class="film" data-p="classic" aria-pressed="true"><span class="n">Classic</span><span class="iso">400 · 暖色</span></button>
+  <button class="film" data-p="wetzlar" aria-pressed="true"><span class="n">Wetzlar</span><span class="iso">100 · 濃密</span></button>
+  <button class="film" data-p="classic" aria-pressed="false"><span class="n">Classic</span><span class="iso">400 · 暖色</span></button>
   <button class="film" data-p="chrome" aria-pressed="false"><span class="n">Chrome</span><span class="iso">200 · 渋め</span></button>
   <button class="film" data-p="mono" aria-pressed="false"><span class="n">Mono</span><span class="iso">100 · 白黒</span></button>
   <button class="film" data-p="soft" aria-pressed="false"><span class="n">Soft</span><span class="iso">160 · 淡い</span></button>
@@ -114,22 +115,26 @@ const $ = id => document.getElementById(id);
 const ls = { get:k=>{try{return localStorage.getItem(k)}catch(e){return null}}, set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}} };
 
 const PRESETS = {
-  classic:{label:'CLASSIC 400',contrast:.45,lift:.045,roll:.97, sat:.88,mono:0,sh:[-.02,.01,.035],hi:[.045,.02,-.035]},
-  chrome: {label:'CHROME 200', contrast:.6, lift:.025,roll:.98, sat:.72,mono:0,sh:[-.03,0,.04],   hi:[.02,.012,-.01]},
-  mono:   {label:'MONO 100',   contrast:.75,lift:.03, roll:.985,sat:0,  mono:1,sh:[0,0,.005],     hi:[.012,.006,0]},
-  soft:   {label:'SOFT 160',   contrast:.15,lift:.085,roll:.94, sat:.82,mono:0,sh:[0,.015,.03],   hi:[.04,.012,.005]},
+  wetzlar:{label:'WETZLAR 100',contrast:.7, lift:0,   roll:.975,sat:1.06,mono:0,clar:.45,sh:[0,-.006,.022],hi:[.032,.016,-.022]},
+  classic:{label:'CLASSIC 400',contrast:.45,lift:.045,roll:.97, sat:.88,mono:0,clar:.15,sh:[-.02,.01,.035],hi:[.045,.02,-.035]},
+  chrome: {label:'CHROME 200', contrast:.6, lift:.025,roll:.98, sat:.72,mono:0,clar:.25,sh:[-.03,0,.04],   hi:[.02,.012,-.01]},
+  mono:   {label:'MONO 100',   contrast:.82,lift:0,   roll:.985,sat:0,  mono:1,clar:.4,sh:[0,0,.005],     hi:[.012,.006,0]},
+  soft:   {label:'SOFT 160',   contrast:.15,lift:.085,roll:.94, sat:.82,mono:0,clar:0,sh:[0,.015,.03],   hi:[.04,.012,.005]},
 };
-let preset = PRESETS[ls.get('sucher.preset')] ? ls.get('sucher.preset') : 'classic';
+let preset = PRESETS[ls.get('sucher.preset')] ? ls.get('sucher.preset') : 'wetzlar';
 
 const VS = `attribute vec2 p;varying vec2 uv;void main(){uv=p*.5+.5;gl_Position=vec4(p,0.,1.);}`;
 const FS = `precision highp float;
 varying vec2 uv;uniform sampler2D tex;uniform vec2 res;uniform vec3 sh,hi;
-uniform float k,gr,vg,ev,contrast,lift,roll,sat,mono,seed,mirror,gs;
+uniform float k,gr,vg,ev,contrast,lift,roll,sat,mono,seed,mirror,gs,clar;
 float hash(vec2 p){vec3 q=fract(vec3(p.xyx)*.1031);q+=dot(q,q.yzx+33.33);return fract((q.x+q.y)*q.z);}
 float cv(float x){x=clamp(x,0.,1.);float s=x*x*(3.-2.*x);float y=x+(s-x)*contrast;y=lift+y*(roll-lift);return mix(x,y,k);}
 void main(){
   vec2 t=uv; if(mirror>.5)t.x=1.-t.x;
   vec3 c=texture2D(tex,t).rgb*exp2(ev);
+  vec2 px=vec2(gs*2.)/res;
+  vec3 bl=(texture2D(tex,t+vec2(px.x,0.)).rgb+texture2D(tex,t-vec2(px.x,0.)).rgb+texture2D(tex,t+vec2(0.,px.y)).rgb+texture2D(tex,t-vec2(0.,px.y)).rgb)*.25*exp2(ev);
+  c=clamp(c+(c-bl)*clar*k*2.5,0.,1.);
   vec3 o=vec3(cv(c.r),cv(c.g),cv(c.b));
   float l=dot(o,vec3(.2126,.7152,.0722));
   if(mono>.5){l=cv(dot(c,vec3(.42,.46,.12)));o=vec3(l);}
@@ -160,7 +165,7 @@ function renderer(canvas){
     gl.uniform2f(U('res'),canvas.width,canvas.height);
     gl.uniform3fv(U('sh'),p.sh); gl.uniform3fv(U('hi'),p.hi);
     gl.uniform1f(U('contrast'),p.contrast); gl.uniform1f(U('lift'),p.lift); gl.uniform1f(U('roll'),p.roll);
-    gl.uniform1f(U('sat'),p.sat); gl.uniform1f(U('mono'),p.mono);
+    gl.uniform1f(U('sat'),p.sat); gl.uniform1f(U('clar'),p.clar); gl.uniform1f(U('mono'),p.mono);
     gl.uniform1f(U('k'),$('k').value/100); gl.uniform1f(U('gr'),$('g').value/100); gl.uniform1f(U('vg'),$('v').value/100);
     gl.uniform1f(U('ev'),$('ev').value/10);
     gl.uniform1f(U('seed'),opt.seed); gl.uniform1f(U('mirror'),opt.mirror?1:0);
