@@ -25,35 +25,35 @@ body{background:var(--bg);color:var(--chrome);font-family:var(--f-ui);overflow:h
   -webkit-user-select:none;user-select:none;touch-action:none}
 
 /* top plate */
-.plate{position:relative;border-radius:22px;padding:10px 12px 10px 16px;display:flex;align-items:center;gap:8px;
+.plate{position:relative;border-radius:18px;padding:6px 8px 6px 14px;display:flex;align-items:center;gap:8px;
   background:linear-gradient(180deg,#3a3a3c 0%,#232325 18%,#1b1b1d 100%);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.12),inset 0 -1px 0 rgba(0,0,0,.6),0 6px 18px rgba(0,0,0,.6)}
 .plate::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:.35;
   background:repeating-linear-gradient(90deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px)}
-.meta{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
-.sig{font:italic 500 19px/1 "Snell Roundhand","Brush Script MT",cursive;color:#d8d5cf;letter-spacing:.02em}
+.meta{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.sig{font:italic 500 16px/1 "Snell Roundhand","Brush Script MT",cursive;color:#d8d5cf;letter-spacing:.02em}
 .metarow{display:flex;align-items:center;gap:12px;font-size:14px}
 .metarow button{appearance:none;background:none;border:none;color:var(--chrome);padding:0;display:flex}
 .metarow svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.6}
 .res{font-size:10px;color:var(--dim);font-family:var(--f-mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dialwrap{display:flex;align-items:center;gap:4px}
 .dialwrap .tick{width:9px;height:2px;background:var(--chrome);opacity:.8}
-.dial{position:relative;width:112px;height:112px;border-radius:50%;touch-action:none;
+.dial{position:relative;width:84px;height:84px;border-radius:50%;touch-action:none;
   background:repeating-conic-gradient(#5b5a58 0 2deg,#2c2b2a 2deg 4deg);
   box-shadow:0 0 0 1px #000,0 3px 8px rgba(0,0,0,.7)}
-.dial.small{width:92px;height:92px}
-.dial.small .lab{font-size:9px}
-.dial .face{position:absolute;inset:6px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#2e2e30,#151516 70%);transition:transform .15s ease-out}
+.dial.small{width:72px;height:72px}
+.dial.small .lab{font-size:7.5px}
+.dial .face{position:absolute;inset:4px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#2e2e30,#151516 70%);transition:transform .15s ease-out}
 .dial .face.drag{transition:none}
-.dial .lab{position:absolute;left:50%;top:50%;font:500 10px var(--f-mono);color:#d9d6d0;white-space:nowrap}
+.dial .lab{position:absolute;left:50%;top:50%;font:500 8.5px var(--f-mono);color:#d9d6d0;white-space:nowrap}
 .dial .lab.hot{color:var(--gold)}
-.dial .knob{position:absolute;left:50%;top:50%;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;
+.dial .knob{position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;
   background:radial-gradient(circle at 35% 30%,#fff,#bdbab4 45%,#6f6d69 100%);box-shadow:0 2px 4px rgba(0,0,0,.7)}
 .dial .cap{position:absolute;left:50%;bottom:-2px;transform:translateX(-50%);font:9px var(--f-mono);color:var(--dim);letter-spacing:.1em}
-.status{text-align:center;font-size:11px;color:var(--dim);padding:6px 0 4px;font-family:var(--f-mono);min-height:22px}
+.status{position:absolute;top:8px;left:50%;transform:translateX(-50%);z-index:4;pointer-events:none;white-space:nowrap;font-size:11px;color:#e8e6e1;font-family:var(--f-mono);background:rgba(0,0,0,.45);padding:3px 10px;border-radius:10px}
 
 /* finder */
-.finder{flex:1;min-height:0;position:relative;display:flex;align-items:center;justify-content:center}
+.finder{flex:1;min-height:0;position:relative;display:flex;align-items:center;justify-content:center;margin:6px calc(-1*max(10px,env(safe-area-inset-right,0px))) 0 calc(-1*max(10px,env(safe-area-inset-left,0px)))}
 #gl{max-width:100%;max-height:100%;display:block;background:#000;touch-action:none}
 .ov{position:absolute;pointer-events:none}
 .fl{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
@@ -68,8 +68,8 @@ body{background:var(--bg);color:var(--chrome);font-family:var(--f-ui);overflow:h
 .fl75{width:44%;height:48%;border:1px dashed rgba(255,255,255,.55)}
 .fl75 b{top:2px;left:5px;font-size:10px;color:rgba(255,255,255,.7)}
 .fbox{position:absolute;width:76px;height:48px;border:1.5px solid var(--focus);background:rgba(244,208,63,.18);transform:translate(-50%,-50%);transition:left .12s,top .12s}
-.counter{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);background:rgba(20,20,20,.85);border-radius:16px;padding:4px 14px;
-  display:flex;align-items:center;gap:10px;font:500 17px var(--f-mono);color:var(--red);letter-spacing:.06em}
+.counter{position:absolute;right:10px;top:8px;background:rgba(20,20,20,.7);border-radius:12px;padding:2px 10px;
+  display:flex;align-items:center;gap:8px;font:500 13px var(--f-mono);color:var(--red);letter-spacing:.06em}
 .counter span{width:7px;height:7px;border-radius:50%;background:var(--red)}
 .flash{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity .25s}
 .flash.on{opacity:.9;transition:none}
@@ -78,31 +78,31 @@ body{background:var(--bg);color:var(--chrome);font-family:var(--f-ui);overflow:h
 .start p{margin:0;font-size:12px;color:var(--dim);line-height:1.7}
 
 /* rulers */
-.ruler{position:relative;height:50px;overflow:hidden;touch-action:none;margin-top:4px;
-  background:linear-gradient(180deg,#0c0c0c,#1c1c1d 50%,#0c0c0c);border-top:1px solid #2a2a2a;border-bottom:1px solid #000}
+.dock{position:absolute;left:0;right:0;bottom:0;z-index:3;display:flex;flex-direction:column;gap:1px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.55) 30%)}
+.ruler{position:relative;height:38px;overflow:hidden;touch-action:none;background:rgba(12,12,12,.55)}
 .ruler::before,.ruler::after{content:"";position:absolute;top:0;bottom:0;width:44px;z-index:2;pointer-events:none}
-.ruler::before{left:0;background:repeating-linear-gradient(90deg,#444 0 1px,transparent 1px 4px),linear-gradient(90deg,#000,transparent)}
-.ruler::after{right:0;background:repeating-linear-gradient(90deg,#444 0 1px,transparent 1px 4px),linear-gradient(270deg,#000,transparent)}
+.ruler::before{left:0;background:linear-gradient(90deg,rgba(0,0,0,.8),transparent)}
+.ruler::after{right:0;background:linear-gradient(270deg,rgba(0,0,0,.8),transparent)}
 .track{position:absolute;top:0;bottom:0;left:0;will-change:transform}
-.track .t{position:absolute;bottom:0;width:1px;height:8px;background:#5a5a5a}
-.track .t.maj{height:14px;background:#aaa}
-.track .n{position:absolute;top:10px;transform:translateX(-50%);font:500 16px var(--f-ui);color:#f2f0ec}
-.ruler .mark{position:absolute;left:50%;top:0;width:2px;height:12px;margin-left:-1px;background:#fff;z-index:3}
+.track .t{position:absolute;bottom:0;width:1px;height:6px;background:#8a8a8a}
+.track .t.maj{height:11px;background:#ddd}
+.track .n{position:absolute;top:3px;transform:translateX(-50%);font:500 14px var(--f-ui);color:#f2f0ec;text-shadow:0 1px 2px #000}
+.ruler .mark{position:absolute;left:50%;bottom:0;width:2px;height:14px;margin-left:-1px;background:#fff;z-index:3}
 
 /* chips & bottom */
-.chips{display:flex;justify-content:center;gap:8px;padding:10px 0 4px}
-.chip{appearance:none;border:1px solid #333;background:#1c1c1e;color:var(--chrome);font:14px var(--f-ui);padding:7px 14px;border-radius:18px}
-.modes{display:flex;justify-content:center;gap:28px;font-size:15px;padding:4px 0}
-.md{appearance:none;background:none;border:none;font:15px var(--f-ui);color:var(--dim);padding:4px 2px}
+.chips{display:flex;justify-content:center;align-items:center;gap:6px;padding:6px 8px 8px;flex-wrap:wrap}
+.chip{appearance:none;border:1px solid #333;background:rgba(28,28,30,.8);color:var(--chrome);font:12px var(--f-ui);padding:5px 10px;border-radius:16px}
+.modes{display:flex;gap:2px;background:rgba(28,28,30,.8);border:1px solid #333;border-radius:16px;padding:1px 4px}
+.md{appearance:none;background:none;border:none;font:12px var(--f-ui);color:var(--dim);padding:4px 6px}
 .md.on{color:var(--gold)}
 body.plain #rF,body.plain #cLens,body.plain #cLook{opacity:.3;pointer-events:none}
-.row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:6px 8px 8px}
-.thumb{justify-self:start;width:62px;height:62px;border-radius:12px;border:1px solid #333;background:#1c1c1e center/cover no-repeat;padding:0}
-.shutter{appearance:none;width:84px;height:84px;border-radius:50%;border:4px solid #fff;background:transparent;display:grid;place-items:center;padding:0}
-.shutter span{width:68px;height:68px;border-radius:50%;background:#fff;transition:transform .1s}
+.row{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:8px 8px 6px}
+.thumb{justify-self:start;width:50px;height:50px;border-radius:12px;border:1px solid #333;background:#1c1c1e center/cover no-repeat;padding:0}
+.shutter{appearance:none;width:70px;height:70px;border-radius:50%;border:4px solid #fff;background:transparent;display:grid;place-items:center;padding:0}
+.shutter span{width:56px;height:56px;border-radius:50%;background:#fff;transition:transform .1s}
 .shutter:active span{transform:scale(.88)}
 .shutter:disabled{opacity:.4}
-.flip{justify-self:end;width:62px;height:62px;border-radius:50%;border:1px solid #333;background:radial-gradient(circle at 50% 45%,#3a2a1a,#111 70%);display:grid;place-items:center;color:var(--chrome);padding:0}
+.flip{justify-self:end;width:50px;height:50px;border-radius:50%;border:1px solid #333;background:radial-gradient(circle at 50% 45%,#3a2a1a,#111 70%);display:grid;place-items:center;color:var(--chrome);padding:0}
 .flip svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:1.5}
 
 .sheet{position:fixed;inset:0;background:rgba(0,0,0,.95);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;z-index:9;
@@ -130,10 +130,10 @@ body.plain #rF,body.plain #cLens,body.plain #cLook{opacity:.3;pointer-events:non
   <div class="dialwrap"><div class="tick"></div><div class="dial" id="dEv" aria-label="露出補正ダイヤル"><div class="face"></div><div class="knob"></div></div></div>
   <div class="dialwrap"><div class="tick"></div><div class="dial small" id="dIso" aria-label="粒子（ISO）ダイヤル"><div class="face"></div><div class="knob"></div></div></div>
 </div>
-<div class="status" id="status">タップでピント位置 · 下のF値でボケ量</div>
 
 <div class="finder" id="finder">
   <canvas id="gl"></canvas>
+  <div class="status" id="status">タップでピント · 下の目盛りでボケ量</div>
   <div class="ov" id="ov">
     <div class="fl fl50" id="fl50"><div class="edge"></div><i></i><i></i><i></i><i></i><b>50</b></div>
     <div class="fl fl75" id="fl75"><b>75</b></div>
@@ -141,21 +141,22 @@ body.plain #rF,body.plain #cLens,body.plain #cLook{opacity:.3;pointer-events:non
     <div class="counter"><b id="cnt">0000</b><span></span></div>
   </div>
   <div class="flash" id="flash"></div>
+  <div class="dock">
+    <div class="ruler" id="rF"><div class="track"></div><div class="mark"></div></div>
+    <div class="ruler" id="rZ"><div class="track"></div><div class="mark"></div></div>
+    <div class="chips">
+      <button class="chip" id="cLens">50/0.95 模型</button>
+      <button class="chip" id="cLook">Wetzlar 調</button>
+      <button class="chip" id="cEv">+0.0</button>
+      <span class="modes" role="group" aria-label="モード"><button class="md" data-m="film">フィルム</button><button class="md" data-m="plain">ふつう</button></span>
+    </div>
+  </div>
   <div class="start" id="start">
     <button id="go">カメラを起動</button>
     <p id="msg">画面をタップした所にピントが合い、<br>そこから離れるほど玉ボケになります。</p>
   </div>
 </div>
 
-<div class="ruler" id="rF"><div class="track"></div><div class="mark"></div></div>
-<div class="ruler" id="rZ"><div class="track"></div><div class="mark"></div></div>
-
-<div class="chips">
-  <button class="chip" id="cLens">50/0.95 模型</button>
-  <button class="chip" id="cLook">Wetzlar 調</button>
-  <button class="chip" id="cEv">+0.0</button>
-</div>
-<div class="modes" role="group" aria-label="モード"><button class="md" data-m="film">フィルム</button><button class="md" data-m="plain">ふつう</button></div>
 <div class="row">
   <button class="thumb" id="thumb" aria-label="最後の1枚を見る" disabled></button>
   <button class="shutter" id="shutter" aria-label="撮影" disabled><span></span></button>
@@ -264,7 +265,7 @@ function renderer(canvas, N){
 // ---------- dials ----------
 function dial(el, labels, getIdx, setIdx, step=32){
   const face = el.querySelector('.face');
-  const R = el.offsetWidth/2 - 18;
+  const R = el.offsetWidth/2 - 13;
   const spans = labels.map((t,i)=>{
     const s=document.createElement('span');s.className='lab';s.textContent=t;
     const a=i*step*Math.PI/180;
